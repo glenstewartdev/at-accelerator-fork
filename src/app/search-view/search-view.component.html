@@ -1,19 +1,28 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <form>
+      <form (ngSubmit)="onSearch($event)">
         <fieldset>
           <legend>TV Show Search</legend>
           <label for="name">Name</label>
-          <input type="text" id="name" placeholder="Name of the show"/>
-          <button class="primary">Search</button>
+          <input
+            type="text"
+            id="name"
+            #searchField
+            [value]="tvShowSearch()"
+            (input)="tvShowSearch.set(searchField.value)"
+            placeholder="Name of the show"
+          />
+          <button type="submit" class="primary">Search</button>
         </fieldset>
       </form>
     </div>
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <app-tv-show-table></app-tv-show-table>
+        <app-tv-show-table
+          [tvShows]="tvShows()"
+        ></app-tv-show-table>
       </div>
   </div>
 </div>
