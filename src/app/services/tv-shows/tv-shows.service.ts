@@ -32,10 +32,11 @@ export class TvShowsService {
   }
 
   fetchTvShowByName(searchValue: string): void {
-    const testSearch = 'arrow';
+    let url = `${this.tvSearchUrl}`;
 
-    const url = `${this.tvSearchUrl}?q=${testSearch}&page=1`;
-    console.log('url is: ', url);
+    if( searchValue.length !== 0 ) {
+      url = `${url}?q=${searchValue}&page=1`;
+    }
 
     this.http.get<TvShowPage>(url)
       .subscribe(response => {

@@ -27,7 +27,6 @@ export class SearchViewComponent implements OnInit {
   onSearch(event: Event) {
     event.preventDefault();
     const searchValue = this.tvShowSearch();
-    console.log('onSearch, searchValue is: ', searchValue);
     this.tvShowService.fetchTvShowByName(searchValue);
   }
 
