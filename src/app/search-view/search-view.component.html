@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <form (ngSubmit)="onSearch($event)">
+      <form>
         <fieldset>
           <legend>TV Show Search</legend>
           <label for="name">Name</label>
@@ -13,7 +13,7 @@
             (input)="tvShowSearch.set(searchField.value)"
             placeholder="Name of the show"
           />
-          <button type="submit" class="primary">Search</button>
+          <button (click)="onSearch($event)" class="primary">Search</button>
         </fieldset>
       </form>
     </div>
