@@ -1,6 +1,6 @@
-import { Component, OnInit, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TvShow } from '../services/tv-shows/tv-show.model';
+import { TvShowPage, TvShowPageState } from '../services/tv-shows/tv-show.model';
 
 @Component({
   selector: 'app-tv-show-table',
@@ -9,11 +9,20 @@ import { TvShow } from '../services/tv-shows/tv-show.model';
   templateUrl: './tv-show-table.component.html',
   styleUrls: ['./tv-show-table.component.css']
 })
-export class TvShowTableComponent implements OnInit {
+export class TvShowTableComponent {
 
-  tvShows = input<TvShow[]>();
+  tvShowsPage = input<TvShowPage>();
 
-  public ngOnInit(): void {
-  }
+  tvShows = computed( () => {
+    return this.tvShowsPage()?.tv_shows;
+  })
+
+  tvShowsPageState = computed( () => {
+    let state: TvShowPageState = {
+      totalPages: this.tvShowsPage()?.pages,
+      currentPage: this.tvShowsPage()?.page
+    }
+    return state;
+  })
 
 }

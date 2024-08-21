@@ -2,7 +2,6 @@ import { Component, OnInit, WritableSignal, computed, inject, signal } from '@an
 import { CommonModule } from '@angular/common';
 import {TvShowTableComponent} from '../tv-show-table/tv-show-table.component';
 import { TvShowsService } from './../services/tv-shows/tv-shows.service';
-import { TvShow, TvShowPage } from '../services/tv-shows/tv-show.model';
 
 @Component({
   selector: 'app-search-view',
@@ -14,8 +13,9 @@ import { TvShow, TvShowPage } from '../services/tv-shows/tv-show.model';
 export class SearchViewComponent implements OnInit {
 
   tvShowService = inject(TvShowsService);
-  public tvShows = computed(() => {
-    return this.tvShowService.tvShowsPage().tv_shows
+
+  public tvShowsPage = computed( () => {
+    return this.tvShowService.tvShowsPage();
   });
 
   public tvShowSearch = signal('');

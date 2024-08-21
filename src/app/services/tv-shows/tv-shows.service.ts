@@ -21,8 +21,6 @@ export class TvShowsService {
   get tvShowsPage(): Signal<TvShowPage> {
     return this.tvShowsPageSignal.asReadonly();
   }
-  
-  constructor() { }
 
   fetchTvShows(): void {
     this.http.get<TvShowPage>(`${this.tvSearchUrl}`)

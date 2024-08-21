@@ -16,3 +16,8 @@ export interface TvShowPage {
   pages: number;
   tv_shows: TvShow[];
 }
+
+export interface TvShowPageState {
+  totalPages: number | undefined;
+  currentPage: number | undefined;
+}
