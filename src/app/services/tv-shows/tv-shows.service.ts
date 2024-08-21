@@ -42,4 +42,22 @@ export class TvShowsService {
       });    
   }
 
+  fetchNextPage(
+    tvShowFilter: string | undefined,
+    page: number
+  ): void {
+    let url = `${this.tvSearchUrl}`;
+
+    if( tvShowFilter?.length !== 0 ) {
+      url = `${url}?q=${tvShowFilter}&page=${page}`;
+    } else {
+      url = `${url}?page=${page}`;
+    }
+
+    this.http.get<TvShowPage>(url)
+      .subscribe(response => {
+        this.tvShowsPageSignal.set(response);
+      }); 
+  }
+
 }

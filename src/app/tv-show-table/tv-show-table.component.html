@@ -25,7 +25,12 @@
   </tbody>
   <thead>
     <tr>
-      <th colspan="4">Page {{tvShowsPageState().currentPage}} of {{tvShowsPageState().totalPages}}</th>
+      <th colspan="4">
+        Page {{tvShowsPageState().currentPage}} of {{tvShowsPageState().totalPages}}
+        @if ( tvShowsPageState().totalPages > 1 ) {
+          <button (click)="onNext($event)" class="primary">Next Page</button>
+        }
+      </th>
     </tr>
   </thead>
 </table>

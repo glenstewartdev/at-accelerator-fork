@@ -18,7 +18,7 @@ export class SearchViewComponent implements OnInit {
     return this.tvShowService.tvShowsPage();
   });
 
-  public tvShowSearch = signal('');
+  public tvShowFilter = signal('');
 
   public ngOnInit(): void {
     this.tvShowService.fetchTvShows();
@@ -26,7 +26,7 @@ export class SearchViewComponent implements OnInit {
 
   onSearch(event: Event) {
     event.preventDefault();
-    const searchValue = this.tvShowSearch();
+    const searchValue = this.tvShowFilter();
     this.tvShowService.fetchTvShowByName(searchValue);
   }
 

@@ -18,6 +18,6 @@ export interface TvShowPage {
 }
 
 export interface TvShowPageState {
-  totalPages: number | undefined;
-  currentPage: number | undefined;
+  totalPages: number;
+  currentPage: number;
 }
