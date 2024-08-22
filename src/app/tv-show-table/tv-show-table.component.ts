@@ -12,19 +12,19 @@ import { TvShowsService } from '../services/tv-shows/tv-shows.service';
 })
 export class TvShowTableComponent {
 
-  tvShowFilter = input<string>();
-  tvShowsPage = input<TvShowPage>();
+  tvShowFilter = input.required<string>();
+  tvShowsPage = input.required<TvShowPage>();
 
   tvShowService = inject(TvShowsService);
 
   tvShows = computed( () => {
-    return this.tvShowsPage()?.tv_shows ?? [];
+    return this.tvShowsPage()?.tv_shows;
   })
 
   tvShowsPageState = computed( () => {
     let state: TvShowPageState = {
-      totalPages: this.tvShowsPage()?.pages ?? 1,
-      currentPage: this.tvShowsPage()?.page ?? 1
+      totalPages: this.tvShowsPage()?.pages,
+      currentPage: this.tvShowsPage()?.page
     }
     return state;
   })
