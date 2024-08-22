@@ -24,7 +24,6 @@ export class SearchViewComponent {
   onSearch(event: Event, searchTerm: string) {
     event.preventDefault();
     this.searchTermChange.emit(searchTerm);
-    
   }
 
 }

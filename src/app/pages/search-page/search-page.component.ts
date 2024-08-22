@@ -3,11 +3,12 @@ import { Component, computed, inject, OnInit, Signal, signal } from '@angular/co
 import { SearchViewComponent } from 'src/app/search-view/search-view.component';
 import { TvShowPage } from 'src/app/services/tv-shows/tv-show.model';
 import { TvShowsService } from 'src/app/services/tv-shows/tv-shows.service';
+import { TvShowTableComponent } from 'src/app/tv-show-table/tv-show-table.component';
 
 @Component({
   selector: 'app-search-page',
   standalone: true,
-  imports: [CommonModule, SearchViewComponent],
+  imports: [CommonModule, SearchViewComponent, TvShowTableComponent],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.css'
 })
