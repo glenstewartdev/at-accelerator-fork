@@ -9,11 +9,10 @@
             type="text"
             id="name"
             #searchField
-            [value]="tvShowFilter()"
-            (input)="tvShowFilter.set(searchField.value)"
+            [value]="searchTerm()"
             placeholder="Name of the show"
           />
-          <button (click)="onSearch($event)" class="primary">Search</button>
+          <button (click)="onSearch($event, searchField.value)" class="primary">Search</button>
         </fieldset>
       </form>
     </div>
@@ -21,7 +20,7 @@
     <div class="row">
       <div class="col-sm-12">
         <app-tv-show-table
-          [tvShowFilter]="tvShowFilter()"
+          [tvShowFilter]="searchTerm()"
           [tvShowsPage]="tvShowsPage()"
         ></app-tv-show-table>
       </div>

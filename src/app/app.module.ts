@@ -4,17 +4,18 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {RouterModule} from '@angular/router';
 import { FavoritesViewComponent } from './favorites-view/favorites-view.component';
+import { SearchPageComponent } from './pages/search-page/search-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FavoritesViewComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FavoritesViewComponent,
+    SearchPageComponent
   ],
   providers: [
     provideHttpClient()

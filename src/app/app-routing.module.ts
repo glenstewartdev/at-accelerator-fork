@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {SearchViewComponent} from './search-view/search-view.component';
 import {FavoritesViewComponent} from "./favorites-view/favorites-view.component";
+import { SearchPageComponent } from './pages/search-page/search-page.component';
 
 const routes: Routes = [
-  {path: "", component: SearchViewComponent},
+  {path: "", component: SearchPageComponent},
+  {path: "search", component: SearchPageComponent},
   {path: "favorites", component: FavoritesViewComponent}
 ];
 

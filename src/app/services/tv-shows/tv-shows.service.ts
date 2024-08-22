@@ -2,7 +2,6 @@ import { Injectable, Signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WritableSignal, signal } from '@angular/core';
 import { TvShow, TvShowPage } from './tv-show.model';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +16,17 @@ export class TvShowsService {
     pages: 0,
     tv_shows: []
   });
+  private tvShows = signal<TvShow[]>([]);
 
-  get tvShowsPage(): Signal<TvShowPage> {
-    return this.tvShowsPageSignal.asReadonly();
-  }
+  public tvShowsPage = this.tvShowsPageSignal.asReadonly();
 
-  fetchTvShows(): void {
+  fetchTvShows(): Signal<TvShowPage> {
     this.http.get<TvShowPage>(`${this.tvSearchUrl}`)
       .subscribe(response => {
         this.tvShowsPageSignal.set(response);
+        this.tvShows.set(response.tv_shows);
       });
+    return this.tvShowsPage;
   }
 
   fetchTvShowByName(searchValue: string): void {
