@@ -26,8 +26,8 @@
   <thead>
     <tr>
       <th colspan="4">
-        Page {{tvShowsPageState().currentPage}} of {{tvShowsPageState().totalPages}}
-        @if ( tvShowsPageState().totalPages > 1 ) {
+        Page {{tvShowsPage().page}} of {{tvShowsPage().pages}}
+        @if ( tvShowsPage().pages > 1 ) {
           <button (click)="onNext($event)" class="primary">Next Page</button>
         }
       </th>

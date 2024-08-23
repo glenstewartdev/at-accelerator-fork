@@ -1,7 +1,6 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, EventEmitter, inject, input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TvShowPage, TvShowPageState } from '../services/tv-shows/tv-show.model';
-import { TvShowsService } from '../services/tv-shows/tv-shows.service';
+import { TvShowPage } from '../services/tv-shows/tv-show.model';
 
 @Component({
   selector: 'app-tv-show-table',
@@ -12,29 +11,16 @@ import { TvShowsService } from '../services/tv-shows/tv-shows.service';
 })
 export class TvShowTableComponent {
 
-  tvShowFilter = input.required<string>();
   tvShowsPage = input.required<TvShowPage>();
-
-  tvShowService = inject(TvShowsService);
+  @Output() nextClicked = new EventEmitter<string>();
 
   tvShows = computed( () => {
     return this.tvShowsPage()?.tv_shows;
   })
 
-  tvShowsPageState = computed( () => {
-    let state: TvShowPageState = {
-      totalPages: this.tvShowsPage()?.pages,
-      currentPage: this.tvShowsPage()?.page
-    }
-    return state;
-  })
-
   onNext(event: Event): void {
     event.preventDefault();
-    const currentPage = this.tvShowsPageState()?.currentPage ?? 0;
-    const page = currentPage + 1;
-
-    this.tvShowService.fetchNextPage(this.tvShowFilter(), page);    
+    this.nextClicked.emit();   
   }
 
 }

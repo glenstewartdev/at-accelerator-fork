@@ -42,7 +42,7 @@ export class TvShowsService {
       });    
   }
 
-  fetchNextPage(
+  fetchPage(
     tvShowFilter: string | undefined,
     page: number
   ): void {

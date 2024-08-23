@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnInit, Signal, signal } from '@angular/core';
+import { Component, inject, OnInit, Signal, signal } from '@angular/core';
 import { SearchViewComponent } from 'src/app/search-view/search-view.component';
 import { TvShowPage } from 'src/app/services/tv-shows/tv-show.model';
 import { TvShowsService } from 'src/app/services/tv-shows/tv-shows.service';
@@ -18,16 +18,18 @@ export class SearchPageComponent implements OnInit {
 
   protected searchTerm = signal<string>('');
   protected tvShowsPage!: Signal<TvShowPage>;
-  protected tvShows = computed( () => {
-    return this.tvShowsPage().tv_shows;
-  }); 
   
   public ngOnInit(): void {
     this.tvShowsPage = this.tvShowService.fetchTvShows();
   }
 
-  handleSearchTermChange(searchTerm: string) {
+  handleSearchTermChange(searchTerm: string): void {
     this.tvShowService.fetchTvShowByName(searchTerm);
+  }
+
+  handleNextClick(): void {
+    const nextPage = this.tvShowsPage().page + 1;
+    this.tvShowService.fetchPage(this.searchTerm(), nextPage);
   }
 }
 
