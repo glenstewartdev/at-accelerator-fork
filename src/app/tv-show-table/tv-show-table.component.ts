@@ -1,6 +1,7 @@
 import { Component, computed, EventEmitter, inject, input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TvShowPage } from '../services/tv-shows/tv-show.model';
+import { TvShow, TvShowPage } from '../services/tv-shows/tv-show.model';
+import { FavoriteShowsService } from '../services/favorite-shows/favorite-shows.service';
 
 @Component({
   selector: 'app-tv-show-table',
@@ -10,6 +11,8 @@ import { TvShowPage } from '../services/tv-shows/tv-show.model';
   styleUrls: ['./tv-show-table.component.css']
 })
 export class TvShowTableComponent {
+
+  protected favoritesService = inject(FavoriteShowsService);
 
   tvShowsPage = input.required<TvShowPage>();
   @Output() nextClicked = new EventEmitter<string>();
@@ -21,6 +24,14 @@ export class TvShowTableComponent {
   onNext(event: Event): void {
     event.preventDefault();
     this.nextClicked.emit();   
+  }
+
+  toggleFavorite(show: TvShow): void {
+    if(this.favoritesService.isFavorite(show.id)) {
+      this.favoritesService.removeFavorite(show)
+    } else {
+    this.favoritesService.addToFavorites(show);
+    }
   }
 
 }
