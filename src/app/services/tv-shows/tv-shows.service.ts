@@ -1,7 +1,7 @@
 import { Injectable, Signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WritableSignal, signal } from '@angular/core';
-import { TvShow, TvShowDetail, TvShowPage } from './tv-show.model';
+import { TvShowPage } from './tv-show.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,7 @@ import { TvShow, TvShowDetail, TvShowPage } from './tv-show.model';
 export class TvShowsService {
   private readonly TVSHOW_BASE_URL = 'https:/www.episodate.com';
   private readonly TVSHOW_SEARCH = '/api/search';
-  private readonly TVSHOW_DETAIL = '/api/show-details';
-
+  
   private http = inject(HttpClient);
   private tvShowsPageSignal: WritableSignal<TvShowPage> = signal({
     total: 0,
@@ -19,32 +18,7 @@ export class TvShowsService {
     tv_shows: []
   });
 
-  private tvShowsDetailSignal: WritableSignal<TvShowDetail> = signal({
-    id: 0,
-    name: '',
-    permalink: '',
-    url: '',
-    description: '',
-    description_source: '',
-    start_date: '',
-    end_data: null,
-    country: '',
-    status: '',
-    runtime: 0,
-    network: '',
-    youtube_link: null,
-    image_path: '',
-    image_thumbnail_path: '',
-    rating: 0,
-    rating_count: 0,
-    countdown: null,
-    genres: [],
-    pictures: [],
-    episodes: []
-  });
-
   public tvShowsPage = this.tvShowsPageSignal.asReadonly();
-  public tvShowDetail = this.tvShowsDetailSignal.asReadonly();
 
   fetchTvShows(): Signal<TvShowPage> {
     let url = `${this.TVSHOW_BASE_URL}${this.TVSHOW_SEARCH}`;
@@ -85,17 +59,4 @@ export class TvShowsService {
         this.tvShowsPageSignal.set(response);
       }); 
   }
-
-  fetchTvShowDetails(ShowId: number): void {
-    let url = `${this.TVSHOW_BASE_URL}${this.TVSHOW_DETAIL}`;
-    if(ShowId) {
-      url = `${url}?q=${ShowId}`;
-      this.http.get<TvShowDetail>(url)
-      .subscribe(response => {
-        this.tvShowsDetailSignal.set(response);
-      });
-    }
-    console.log('Show detail is: ', this.tvShowDetail());
-  }
-
 }
