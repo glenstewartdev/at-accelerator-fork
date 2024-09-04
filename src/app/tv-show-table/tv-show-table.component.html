@@ -16,7 +16,9 @@
         <td data-label="Year started">{{ show.start_date }}</td>
         <td data-label="Status">{{ show.status }}</td>
         <td data-label="Actions">
-          <span class="icon-info"></span>
+          <span class="icon-info"
+            (click)="navigateToShowDetail(show.id)"
+          ></span>
           <span class="icon-bookmark"
             [class.highlight]="favoritesService.isFavorite(show.id)"
             (click)="toggleFavorite(show)"

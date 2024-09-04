@@ -2,6 +2,7 @@ import { Component, computed, EventEmitter, inject, input, Output } from '@angul
 import { CommonModule } from '@angular/common';
 import { TvShow, TvShowPage } from '../services/tv-shows/tv-show.model';
 import { FavoriteShowsService } from '../services/favorite-shows/favorite-shows.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tv-show-table',
@@ -11,6 +12,10 @@ import { FavoriteShowsService } from '../services/favorite-shows/favorite-shows.
   styleUrls: ['./tv-show-table.component.css']
 })
 export class TvShowTableComponent {
+
+  // TODO:
+  // remove this and instead emit an event to the parent
+  private router = inject(Router);
 
   protected favoritesService = inject(FavoriteShowsService);
 
@@ -32,6 +37,10 @@ export class TvShowTableComponent {
     } else {
     this.favoritesService.addToFavorites(show);
     }
+  }
+
+  navigateToShowDetail(id: number): void {
+    this.router.navigate(['show-details', id]);
   }
 
 }
