@@ -1,7 +1,25 @@
-<p>Tv Show Details</p>
 @if (tvShowDetail) {
-  <h1>{{ tvShowDetail.name }}</h1>
-  <span>{{ tvShowDetail.description }}</span>
-  <!-- Add other fields as necessary -->
+  <h2>{{tvShowDetail.name}}  - {{tvShowDetail.country}} - {{tvShowDetail.start_date | date:'yyyy'}} </h2>
+  <hr/>
+  <div>
+ 
+  </div>
+ <div class="section">
+   <div class="container">
+     <div class="row">
+       <div class="col-sm-6">
+         <img [src]="tvShowDetail.image_thumbnail_path" />
+       </div>
+       <div class="col-sm-6" [innerHTML]="tvShowDetail.description">
+       </div>
+     </div>
+   </div>
+   <div class="row">
+     <div class="col-sm-12">
+       <h5>Rating: {{tvShowDetail.rating | number: '1.0-2'}}/10 (rated by {{tvShowDetail.rating_count}} people)</h5>
+     </div>
+   </div>
+ </div>
+  <button (click)="back()" class="primary"><< Back</button>
 }
 
