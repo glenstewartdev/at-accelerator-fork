@@ -11,7 +11,8 @@ const routes: Routes = [
   {path: "favorites", component: FavoritesPageComponent},
   {
     path: "show-details/:id",
-    component: TvShowDetailViewComponent,
+    loadComponent: () => import('./views/tv-show-detail-view/tv-show-detail-view.component')
+      .then(mod => mod.TvShowDetailViewComponent),
     resolve: {
       tvShowDetail: TvShowDetailService
     }
