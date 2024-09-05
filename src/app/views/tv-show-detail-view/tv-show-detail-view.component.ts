@@ -10,7 +10,7 @@ import { TvShowDetailService } from 'src/app/services/tv-show-detail/tv-show-det
   templateUrl: './tv-show-detail-view.component.html',
   styleUrl: './tv-show-detail-view.component.css'
 })
-export class TvShowDetailViewComponent {
+export default class TvShowDetailViewComponent {
 
   @Input() tvShowDetail!: TvShowDetail;
 
