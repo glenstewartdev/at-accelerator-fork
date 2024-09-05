@@ -19,6 +19,8 @@
        <h5>Rating: {{tvShowDetail.rating | number: '1.0-2'}}/10 (rated by {{tvShowDetail.rating_count}} people)</h5>
      </div>
    </div>
+   <p>{{tvShowDetailService.seasonCount() | i18nPlural:{"=0": "No Seasons","=1": "1 Season", "other": "# Seasons"} }}</p>
+   <p>{{tvShowDetailService.episodes().length | i18nPlural: {"=0": "No Episodes","=1": "1 Episode", "other": "# Episodes"} }}</p>
  </div>
   <button (click)="back()" class="primary"><< Back</button>
 }

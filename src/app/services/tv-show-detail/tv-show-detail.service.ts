@@ -1,8 +1,8 @@
-import { inject, Injectable } from '@angular/core';
-import { TvShowDetail } from '../tv-shows/tv-show.model';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { TvShowDetail, TvShowEpisode } from '../tv-shows/tv-show.model';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { map, Observable, throwError } from 'rxjs';
+import { map, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,14 @@ export class TvShowDetailService implements Resolve<Observable<TvShowDetail>> {
 
   private http = inject(HttpClient);
 
+  episodes = signal<TvShowEpisode[]>([]);
+
+  seasonCount = computed( () => {
+    const seasons = new Set<number>();
+    this.episodes().forEach(episode => seasons.add(episode.season));
+    return seasons.size;
+  });
+
   fetchTvShowDetails(ShowId: number): Observable<TvShowDetail> {
     
     let url = `${this.TVSHOW_BASE_URL}${this.TVSHOW_DETAIL}`;
@@ -22,7 +30,10 @@ export class TvShowDetailService implements Resolve<Observable<TvShowDetail>> {
       url = `${url}?q=${ShowId}`;
       returnValue$ = this.http.get<{tvShow: TvShowDetail}>(url)
         .pipe(
-          map(data => data.tvShow)
+          map(data => data.tvShow),
+          tap(tvShow => {
+            this.episodes.set(tvShow.episodes);
+          })
         );
     } else {
       returnValue$ = throwError(() => new Error('TvShowDetailService.fetchTvShowDetails: showId is required'));
