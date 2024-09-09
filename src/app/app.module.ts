@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FavoritesViewComponent } from './favorites-view/favorites-view.component';
 import { SearchPageComponent } from './pages/search-page/search-page.component';
-
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 @NgModule({
   declarations: [
     AppComponent
@@ -15,10 +15,11 @@ import { SearchPageComponent } from './pages/search-page/search-page.component';
     BrowserModule,
     AppRoutingModule,
     FavoritesViewComponent,
-    SearchPageComponent
+    SearchPageComponent,
   ],
   providers: [
-    provideHttpClient()
+    provideHttpClient(),
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

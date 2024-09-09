@@ -1,9 +1,4 @@
-<app-favorites-view></app-favorites-view>
-<div class="row">
-  <div class="col-sm-12">
-    <app-tv-show-table
-      [tvShowsPage]="favorateShowsPage()"
-      (nextClicked)="handleNextClick()"
-    ></app-tv-show-table>
-  </div>
-</div>
+<app-favorites-view
+  [tvShowsPage]="favorateShowsPage()"
+  [favoritesDetailList]="favoriteDetailslist()"
+></app-favorites-view>

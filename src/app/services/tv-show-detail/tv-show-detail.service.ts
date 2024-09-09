@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { TvShowDetail, TvShowEpisode } from '../tv-shows/tv-show.model';
+import { TvShow, TvShowDetail, TvShowEpisode } from '../tv-shows/tv-show.model';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { map, Observable, tap, throwError } from 'rxjs';
+import { forkJoin, map, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +39,11 @@ export class TvShowDetailService implements Resolve<Observable<TvShowDetail>> {
       returnValue$ = throwError(() => new Error('TvShowDetailService.fetchTvShowDetails: showId is required'));
     }
     return returnValue$;
+  }
+
+  fetchAllTvShowDetails(tvShows: TvShow[]): Observable<TvShowDetail[]> {
+    const detailObservables = tvShows.map(show => this.fetchTvShowDetails(show.id));
+    return forkJoin(detailObservables);
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<TvShowDetail> {

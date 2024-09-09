@@ -15,6 +15,7 @@ import { TvShowTableComponent } from 'src/app/tv-show-table/tv-show-table.compon
 export class FavoritesPageComponent {
   favoriteShowsService = inject(FavoriteShowsService);
   favorateShowsPage = signal<TvShowPage>(this.favoriteShowsService.favoritesPage());
+  favoriteDetailslist = this.favoriteShowsService.getAllFavoritesDetail();
 
   handleNextClick(): void {
     this.favoriteShowsService.nextPage(this.favorateShowsPage().page);
