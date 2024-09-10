@@ -49,7 +49,7 @@ export interface TvShowDetail {
   image_thumbnail_path: string;
   rating: number;
   rating_count: number;
-  countdown: string | null; // ?
+  countdown: null | TvShowEpisode; // ?
   genres: TvShowGenre[];
   pictures: string[];
   episodes: TvShowEpisode[];
