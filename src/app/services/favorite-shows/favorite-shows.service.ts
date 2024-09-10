@@ -45,7 +45,6 @@ export class FavoriteShowsService {
       this.tvShowDetailService.fetchAllTvShowDetails(this.favoriteShows())
       .subscribe( (response) => {
         this.favoritesDetails.set(response);
-        console.log("favoriteDetails is: ", response);
       });
     }
     return this.favoritesDetails;
