@@ -19,9 +19,46 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   gap: 16px;
 }
 
+.card {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  width: 100%; /* Set your desired width */
+  height: 100%; /* Set your desired height */
+}
+
+.outer-container {
+  display: flex;
+  justify-content: center; /* Center the group of cards horizontally */
+  gap: 16px; /* Set the desired distance between cards */
+  padding: 5px; /* Optional: Add padding around the container */
+}
+
+.image-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 250px; /* Set the height of the container */
+}
+
+img[mat-card-image] {
+  width: 100%; /* Make the image take the full width of the card */
+  height: 100%; /* Set your desired image height */
+  object-fit: cover; /* Ensure the image covers the area without distortion */
+}
+
 @media (max-width: 1200px) {
   .card-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .card {
+    width: 500px; /* Set your desired width */
+    height: 300px; /* Set your desired height */
+  }
+  img[mat-card-image] {
+    width: 80%; /* Make the image take the full width of the card */
+    height: 80%; /* Set your desired image height */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
   }
 }
 
@@ -29,5 +66,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .card-grid {
     grid-template-columns: 1fr;
   }
+  .card {
+    width: 80%; /* Set your desired width */
+    height: 50%; /* Set your desired height */
+  }
+  img[mat-card-image] {
+    width: 80; /* Make the image take the full width of the card */
+    height: 80%; /* Set your desired image height */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+  }
 }
+
 

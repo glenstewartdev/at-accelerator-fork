@@ -1,9 +1,11 @@
-<mat-card>
+<mat-card class="card">
   <mat-card-header>
     <mat-card-title>{{tvShowDetail().name}}</mat-card-title>
     <mat-card-subtitle>Card Subtitle</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src={{tvShowDetail().image_path}} alt="Image">
+  <div class="image-container">
+    <img mat-card-image src={{tvShowDetail().image_path}} alt="Image">
+  </div>
   <mat-card-content>
     @if (tvShowDetail().countdown) {
       <p>
@@ -18,4 +20,3 @@
     <button mat-button>SHARE</button>
   </mat-card-actions>
 </mat-card>
-
