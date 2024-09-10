@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{tvShowDetail().name}}</mat-card-title>
+    <mat-card-subtitle>Card Subtitle</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src={{tvShowDetail().image_path}} alt="Image">
+  <mat-card-content>
+    @if (tvShowDetail().countdown) {
+      <p>
+        Next episode: {{tvShowDetail().countdown?.air_date | date}}.
+      </p>
+    } @else {
+      <p>No next episode.</p>
+    }
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>
+</mat-card>
+

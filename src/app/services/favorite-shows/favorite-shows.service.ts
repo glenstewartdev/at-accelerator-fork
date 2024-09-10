@@ -1,11 +1,14 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { TvShow, TvShowPage } from '../tv-shows/tv-show.model';
+import { TvShow, TvShowDetail, TvShowPage } from '../tv-shows/tv-show.model';
 import { LocalStorageService } from '../local-storage/local-storage.service';
+import { TvShowDetailService } from '../tv-show-detail/tv-show-detail.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoriteShowsService {
+
+  private tvShowDetailService = inject(TvShowDetailService);
 
   private localStorageService = inject(LocalStorageService)
   private favoriteShows = signal<TvShow[]>(
@@ -31,9 +34,21 @@ export class FavoriteShowsService {
       tv_shows: this.favoriteShows()
     }
     return page;
-  })
+  });
+
+  public favoritesDetails = signal<TvShowDetail[]>([]);
 
   constructor() { }
+
+  getAllFavoritesDetail () {
+    if(this.favoritesDetails().length === 0) {
+      this.tvShowDetailService.fetchAllTvShowDetails(this.favoriteShows())
+      .subscribe( (response) => {
+        this.favoritesDetails.set(response);
+      });
+    }
+    return this.favoritesDetails;
+  }
 
   addToFavorites(newFavorite: TvShow): void {
     if (newFavorite) {

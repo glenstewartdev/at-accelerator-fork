@@ -1,2 +1,10 @@
-<p>favorites-view works!</p>
+<!-- <p>start of {{favoritesDetailList().length}} favorites details</p> -->
+<div class="card-grid">
+  @for ( detail of favoritesDetailList(); track detail.id ) {
+    <!-- <p>Building Details: {{detail.name}}</p> -->
+    <app-favorites-card
+      [tvShowDetail]="detail"
+    ></app-favorites-card>
+  }
+</div>
 

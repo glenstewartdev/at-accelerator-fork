@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { TvShowDetail, TvShowEpisode } from '../tv-shows/tv-show.model';
+import { TvShow, TvShowDetail, TvShowEpisode } from '../tv-shows/tv-show.model';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { map, Observable, tap, throwError } from 'rxjs';
+import { forkJoin, map, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -41,9 +41,36 @@ export class TvShowDetailService implements Resolve<Observable<TvShowDetail>> {
     return returnValue$;
   }
 
+  fetchAllTvShowDetails(tvShows: TvShow[]): Observable<TvShowDetail[]> {
+    const detailObservables = tvShows.map(show => this.fetchTvShowDetails(show.id));
+    return forkJoin(detailObservables)
+    .pipe(
+      map(this.sortDetailsByNextEpisodeDate)
+    );
+  }
+
   resolve(route: ActivatedRouteSnapshot): Observable<TvShowDetail> {
     const id = route.paramMap.get('id');
     let tvShowDetail$ = this.fetchTvShowDetails(Number(id));
     return tvShowDetail$;
+  }
+
+  private sortDetailsByNextEpisodeDate(tvShowDetails: TvShowDetail[]): TvShowDetail[] {
+    tvShowDetails.sort((show1, show2) => {
+      if (show1.status === "Running" && show2.status !== "Running") {
+        return -1;
+      }
+      if (show1.status === "Ended" || show1.status === "Canceled/Ended") {
+        return 1;
+      }
+      if (show1.countdown && !show2.countdown) {
+        return -1;
+      }
+      if (show1.countdown && show2.countdown && show1.countdown?.air_date < show2.countdown?.air_date) {
+        return -1;
+      }
+      return 0;
+    });
+    return tvShowDetails;
   }
 }
