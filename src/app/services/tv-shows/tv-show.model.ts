@@ -1,3 +1,10 @@
+export type ShowStatus = 
+  "Ended" |
+  "Running" |
+  "To Be Determined" |
+  "Canceled/Ended" |
+  "New Series";
+
 export interface TvShow {
   id: number;
   name: string;
@@ -6,7 +13,7 @@ export interface TvShow {
   end_data: string | null;
   country: string;
   network: string;
-  status: string;
+  status: ShowStatus;
   image_thumbnail_path: string;
 }
 
@@ -41,7 +48,7 @@ export interface TvShowDetail {
   start_date: string;
   end_data: string | null;
   country: string;
-  status: string;
+  status: ShowStatus;
   runtime: number;
   network: string;
   youtube_link: string | null;

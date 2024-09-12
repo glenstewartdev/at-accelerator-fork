@@ -52,19 +52,26 @@ export class FavoriteShowsService {
 
   addToFavorites(newFavorite: TvShow): void {
     if (newFavorite) {
-      this.favoriteShows().push(newFavorite);
+      const currentFavorites = this.favoriteShows();
+      // don't do it this way
+      // the signal will not be notified of the change
+      //this.favoriteShows().push(newFavorite);
+
+      // by using the signal's setter, the signal change is seen
+      this.favoriteShows.set([...currentFavorites, newFavorite]);
+      this.addMissingDetails();
       this.localStorageService.setItem('showFavorites', this.favoriteShows());
     }
   }
 
   removeFavorite(favoriteToRemove: TvShow): void {
-    if(favoriteToRemove){
-      const index = this.favoriteShows().findIndex(show => show.id === favoriteToRemove.id);
-
-      if (index !== -1) {
-        this.favoriteShows().splice(index, 1);
-        this.localStorageService.setItem('showFavorites', this.favoriteShows());
-      }
+    if (favoriteToRemove) {
+      const currentFavorites = this.favoriteShows();
+      const updatedFavorites = currentFavorites.filter(show => show.id !== favoriteToRemove.id);
+  
+      this.favoriteShows.set(updatedFavorites);
+      this.removeExtraDetails();
+      this.localStorageService.setItem('showFavorites', updatedFavorites);
     }
   }
 
@@ -78,5 +85,45 @@ export class FavoriteShowsService {
     const startIndex = (page - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.favoriteShows.set(this.favoriteShows().slice(startIndex, endIndex));
+  }
+
+  private refreshFavoriteDetails(): void {
+    if(this.favoritesDetails().length !== 0) {
+      this.addMissingDetails();
+      this.removeExtraDetails();
+    }
+  }
+
+  private addMissingDetails(): void {
+    const favoriteShows = this.favoriteShows();
+    const favoritesDetail = this.favoritesDetails();
+
+      // Find shows in favoriteShows that are not in favoritesDetail
+    const missingShows = favoriteShows.filter(show => 
+    !favoritesDetail.some(detail => detail.id === show.id)
+    );
+
+    if (missingShows.length > 0) {
+      this.tvShowDetailService.fetchAllTvShowDetails(missingShows)
+      .subscribe( (response) => {
+        this.favoritesDetails.set([...favoritesDetail, ...response]);
+      });
+    }
+  }
+
+  private removeExtraDetails() : void {
+    const favoriteShows = this.favoriteShows();
+    const favoritesDetail = this.favoritesDetails();
+
+    const extraShows = favoritesDetail.filter(show => 
+      !favoriteShows.some(detail => detail.id === show.id)
+      );
+
+      if (extraShows.length > 0) {
+        const updatedFavoritesDetails = favoritesDetail.filter(detail =>
+          !extraShows.some(show => show.id === detail.id));
+    
+        this.favoritesDetails.set(updatedFavoritesDetails);
+      }
   }
 }

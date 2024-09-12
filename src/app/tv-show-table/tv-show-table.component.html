@@ -19,9 +19,9 @@
           <span class="icon-info"
             (click)="navigateToShowDetail(show.id)"
           ></span>
-          <span class="icon-bookmark"
-            [class.highlight]="favoritesService.isFavorite(show.id)"
-            (click)="toggleFavorite(show)"
+          <span
+            class="icon-bookmark"
+            appToggleFavorite [show]="show"
           ></span>
           <span class="icon-link"></span>
         </td>

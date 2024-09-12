@@ -1,13 +1,14 @@
 import { Component, computed, EventEmitter, inject, input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TvShow, TvShowPage } from '../services/tv-shows/tv-show.model';
+import { TvShowPage } from '../services/tv-shows/tv-show.model';
 import { FavoriteShowsService } from '../services/favorite-shows/favorite-shows.service';
 import { Router } from '@angular/router';
+import { ToggleFavoriteDirective } from '../directives/toggle-favorite.directive';
 
 @Component({
   selector: 'app-tv-show-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ToggleFavoriteDirective],
   templateUrl: './tv-show-table.component.html',
   styleUrls: ['./tv-show-table.component.css']
 })
@@ -29,14 +30,6 @@ export class TvShowTableComponent {
   onNext(event: Event): void {
     event.preventDefault();
     this.nextClicked.emit();   
-  }
-
-  toggleFavorite(show: TvShow): void {
-    if(this.favoritesService.isFavorite(show.id)) {
-      this.favoritesService.removeFavorite(show)
-    } else {
-    this.favoritesService.addToFavorites(show);
-    }
   }
 
   navigateToShowDetail(id: number): void {
