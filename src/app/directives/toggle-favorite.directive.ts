@@ -1,5 +1,4 @@
 import { Directive, HostBinding, HostListener, inject, Input } from '@angular/core';
-import { TvShow } from '../services/tv-shows/tv-show.model';
 import { FavoriteShowsService } from '../services/favorite-shows/favorite-shows.service';
 
 @Directive({
@@ -7,20 +6,20 @@ import { FavoriteShowsService } from '../services/favorite-shows/favorite-shows.
   standalone: true
 })
 export class ToggleFavoriteDirective {
-  @Input() show!: TvShow;
+  @Input() showId!: number;
 
   private favoritesService = inject(FavoriteShowsService);
   @HostBinding('class.highlight')
   get highlight() {
-    return this.favoritesService.isFavorite(this.show.id)
+    return this.favoritesService.isFavorite(this.showId)
   } 
 
   @HostListener('click')
   toggleFavorite(): void {
-    if(this.favoritesService.isFavorite(this.show.id)) {
-      this.favoritesService.removeFavorite(this.show)
+    if(this.favoritesService.isFavorite(this.showId)) {
+      this.favoritesService.removeFavoriteById(this.showId);
     } else {
-    this.favoritesService.addToFavorites(this.show);
+    this.favoritesService.addToFavoritesById(this.showId);
     }
   }
 }

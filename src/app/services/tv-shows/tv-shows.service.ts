@@ -1,7 +1,7 @@
-import { Injectable, Signal, inject } from '@angular/core';
+import { Injectable, Signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WritableSignal, signal } from '@angular/core';
-import { TvShowPage } from './tv-show.model';
+import { TvShow, TvShowPage } from './tv-show.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,15 @@ export class TvShowsService {
   });
 
   public tvShowsPage = this.tvShowsPageSignal.asReadonly();
+  public tvShows = computed( () => {
+    return this.tvShowsPage().tv_shows;
+  });
+
+  getTvShowById(showId: number): TvShow | undefined {
+    console.log('TvShows list is: ', this.tvShows());
+    const tvShow = this.tvShows().find( show => show.id === showId);
+    return tvShow;
+  }
 
   fetchTvShows(): Signal<TvShowPage> {
     let url = `${this.TVSHOW_BASE_URL}${this.TVSHOW_SEARCH}`;

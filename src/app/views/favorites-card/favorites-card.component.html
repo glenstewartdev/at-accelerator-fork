@@ -3,17 +3,16 @@
     <mat-card-title>{{tvShowDetail().name}}</mat-card-title>
     <mat-card-subtitle>{{tvShowDetail() | countdown}}</mat-card-subtitle>
   </mat-card-header>
-  <div class="image-container">
-    <img mat-card-image src={{tvShowDetail().image_path}} alt="Image">
-  </div>
   <mat-card-content>
-    @if (tvShowDetail().countdown) {
-      <p>
-        Next episode: {{tvShowDetail().countdown?.air_date | date}}.
-      </p>
-    } @else {
-      <p>No next episode.</p>
-    }
+    <div class="image-container">
+      <img mat-card-image src={{tvShowDetail().image_path}} alt="Image">
+    </div>
+    <div>
+      <span
+        class="icon-bookmark"
+        appToggleFavorite [showId]="tvShowDetail().id"
+      ></span>
+    </div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button>LIKE</button>
